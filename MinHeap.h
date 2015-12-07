@@ -34,7 +34,8 @@ MinHeap<T>::MinHeap(int max) {
 template <class T>
 MinHeap<T>::MinHeap(T *array, int num, int max) {
     this->maxSize = max;
-    this->CurrentPos = num - 1;
+    this->CurrentPos =num - 1;
+    heapArray = new T[max];
     for(; num > 0 ; num--){
         heapArray[CurrentPos + 1 - num] = array[CurrentPos + 1 - num];
     }
@@ -76,10 +77,7 @@ bool MinHeap<T>::isLeaf(int pos) const {
     else
         return true;
 }
-template <class T>
-void MinHeap<T>::siftUp(int pos) {
 
-}
 template <class T>
 void MinHeap<T>::siftDown(int left) {
     int i = left;
@@ -127,7 +125,7 @@ bool MinHeap<T>::insert(const T &newNode) {
 }
 template <class T>
 void MinHeap<T>::buildHeap(){
-    for(int i = (CurrentPos - 1) / 2;i >= 0;i++)
+    for(int i = (CurrentPos - 1) / 2;i >= 0;i--)
         siftDown(i);
 }
 template <class T>
@@ -150,6 +148,5 @@ bool MinHeap<T>::removeMin(T&targ) {
     if(CurrentPos > 0)
         siftDown(0);
     return true;
-
 }
 #endif //HUFFMANTREE_MINHEAP_H
