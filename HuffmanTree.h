@@ -5,6 +5,8 @@
 #ifndef HUFFMANTREE_HUFFMANTREE_H
 #define HUFFMANTREE_HUFFMANTREE_H
 #include "MinHeap.h"
+#include <ostream>
+#include <queue>
 template <class T>
 class HuffmanTreeNode{
 public:
@@ -13,8 +15,8 @@ public:
     HuffmanTreeNode();
     T element;
     HuffmanTreeNode<T>& operator =(const HuffmanTreeNode<T>src);
-    bool operator<(const HuffmanTreeNode<T>lf,const HuffmanTreeNode<T>rt);
-    bool operator>(const HuffmanTreeNode<T>lf,const HuffmanTreeNode<T>rt);
+    bool operator<(const HuffmanTreeNode<T>rt);
+    bool operator>(const HuffmanTreeNode<T>rt);
 };
 template <class T>
 HuffmanTreeNode<T>::HuffmanTreeNode(){
@@ -31,12 +33,12 @@ HuffmanTreeNode<T>& HuffmanTreeNode<T>::operator=(const HuffmanTreeNode<T> src) 
     return *this;
 }
 template <class T>
-bool HuffmanTreeNode<T>::operator<(const HuffmanTreeNode<T> lf, const HuffmanTreeNode<T> rt) {
-    return lf.weight < rt.weight;
+bool HuffmanTreeNode<T>::operator<(const HuffmanTreeNode<T> rt) {
+    return this->weight < rt.weight;
 }
 template <class T>
-bool HuffmanTreeNode<T>::operator>(const HuffmanTreeNode<T> lf, const HuffmanTreeNode<T> rt) {
-    return lf.weight > rt.weight;
+bool HuffmanTreeNode<T>::operator>( const HuffmanTreeNode<T> rt) {
+    return this->weight > rt.weight;
 }
 
 template <class T>
@@ -48,11 +50,12 @@ private:
 public:
     HuffmanTree(HuffmanTreeNode<T> nodeList[], int n);
     HuffmanTree(int weight[], T ele[],int n);
+    std::ostream&operator<<(std::ostream&out,HuffmanTree<T>*src);
     virtual ~HuffmanTree(){DeleteTree(root);}
 };
 template <class T>
 HuffmanTree<T>::HuffmanTree(int weight[], T *ele, int n) {
-    HuffmanTreeNode<T>*nodeList = new HuffmanTreeNode[n];
+    HuffmanTreeNode<T>*nodeList = new HuffmanTreeNode<T>[n];
     for(int i = 0;i<n;i++){
         nodeList[i].element = ele[i];
         nodeList[i].weight = weight[i];
@@ -94,4 +97,5 @@ void HuffmanTree<T>::DeleteTree(HuffmanTreeNode<T> *root) {
         DeleteTree(root->rightChild);
     delete root;
 }
+
 #endif //HUFFMANTREE_HUFFMANTREE_H

@@ -9,6 +9,8 @@ int main() {
     MinHeap<int>* heap = new MinHeap<int>(a,10,20);
      */
     int a[] = {7,5,2,4};
-    HuffmanTree<char> tree(a,)
+    char b[] = {'a','b','c','d'};
+    HuffmanTree<char> tree(a,b,4);
+    getchar();
     return 0;
 }

@@ -12,7 +12,7 @@ private:
     int imgWidth;
     int imgHeight;
     string fileSymbol;
-    map cbtable;
+    //map cbtable;
 
 };
 #endif //HUFFMANTREE_COMPRESSOR_H

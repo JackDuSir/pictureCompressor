@@ -105,7 +105,7 @@ void MinHeap<T>::siftUp(int pos) {
     if(j < 0)
         return ;
     T temp = heapArray[i];
-    while(j >= 0){
+    while(j >= 0 && i != 0){
         if(temp < heapArray[j]){
             heapArray[i] = heapArray[j];
             i = j;
