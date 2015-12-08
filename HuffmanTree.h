@@ -7,6 +7,9 @@
 #include "MinHeap.h"
 #include <ostream>
 #include <queue>
+#include <string>
+#include <map>
+using namespace std;
 template <class T>
 class HuffmanTreeNode{
 public:
@@ -45,22 +48,27 @@ template <class T>
 class HuffmanTree{
 private:
     HuffmanTreeNode<T> * root;
+    map<T,string>*cltable;
     void MergeTree(HuffmanTreeNode<T> *ht1, HuffmanTreeNode<T> *ht2, HuffmanTreeNode<T> *parent);
     void DeleteTree(HuffmanTreeNode<T>*root);
 public:
+    ~HuffmanTree(){DeleteTree(root);}
     HuffmanTree(HuffmanTreeNode<T> nodeList[], int n);
-    HuffmanTree(int weight[], T ele[],int n);
-    std::ostream&operator<<(std::ostream&out,HuffmanTree<T>*src);
-    virtual ~HuffmanTree(){DeleteTree(root);}
+    static HuffmanTreeNode<T>* getNodelist(map<T,int>*weights);
+    map<T,string>* getMap();
+    void initMap(HuffmanTreeNode<T>*root,string parentCode="");
+
 };
 template <class T>
-HuffmanTree<T>::HuffmanTree(int weight[], T *ele, int n) {
-    HuffmanTreeNode<T>*nodeList = new HuffmanTreeNode<T>[n];
-    for(int i = 0;i<n;i++){
-        nodeList[i].element = ele[i];
-        nodeList[i].weight = weight[i];
+HuffmanTreeNode<T>* HuffmanTree<T>::getNodelist(map<T,int>*weights){
+    HuffmanTreeNode<T>*nodeList = new HuffmanTreeNode<T>[weights->size()];
+    map<T,int>::iterator it ;
+    int counter = 0;
+    for(it = weights->begin();it!=weights->end();it++,counter++){
+        nodeList[counter].element = it->first;
+        nodeList[counter].weight = it->second;
     }
-    HuffmanTree(nodeList,n);
+    return nodeList;
 }
 template <class T>
 HuffmanTree<T>::HuffmanTree(HuffmanTreeNode<T> nodeList[], int n) {
@@ -80,12 +88,31 @@ HuffmanTree<T>::HuffmanTree(HuffmanTreeNode<T> nodeList[], int n) {
         root = parent;
     }
     delete[] nodeList;
+    cltable = new map<T,string>;
+    initMap(root);
 }
 template <class T>
 void HuffmanTree<T>::MergeTree(HuffmanTreeNode<T> *ht1, HuffmanTreeNode<T> *ht2, HuffmanTreeNode<T> *parent) {
     parent->leftChild = ht1;
     parent->rightChild = ht2;
     parent->weight = ht1->weight + ht2->weight;
+}
+template <class T>
+void HuffmanTree<T>::initMap(HuffmanTreeNode<T> *root,string parentCode) {
+    if(root == 0)
+        return ;
+    if(root->leftChild == 0)
+        cltable->insert(pair<T,string>(root->element,parentCode.c_str()));
+    if(root->leftChild!=0){
+        initMap(root->leftChild,parentCode+"0");
+    }
+    if(root->rightChild!=0){
+        initMap(root->rightChild,parentCode+"1");
+    }
+}
+template <class T>
+map<T,string>* HuffmanTree<T>::getMap() {
+    return cltable;
 }
 template  <class T>
 void HuffmanTree<T>::DeleteTree(HuffmanTreeNode<T> *root) {

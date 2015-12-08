@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Compressor.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HCode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HuffmanTree.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MaxHeap.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MinHeap.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
     </content>
